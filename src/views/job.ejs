@@ -28,7 +28,10 @@
 
     <div class="container flex animate-up delay-2">
       <main>
-        <form id="form-job">
+        <form 
+          id="form-job"
+          method="post"
+        >
           <fieldset>
             <legend>Dados do Job</legend>
             <div class="separator light"></div>
@@ -40,47 +43,53 @@
 
             <div class="input-group">
               <div class="input-wrapper">
-                <label for="daily-hours">Quantas horas <br/>
-                  por dia vai dedicar ao job?</label>
+                <label for="daily-hours">
+                  Quantas horas <br/>por dia vai dedicar ao job?
+                </label>
                 <input 
                   type="number"
                   step="0.1" 
                   id="daily-hours" 
-                  name="daily-hours"/>
+                  name="dailyHours"/>
               </div>
 
               <div class="input-wrapper">
-                <label for="total-hours">Estimativa de <br/>
-                  horas para esse Job?</label>
+                <label for="total-hours">
+                  Estimativa de <br/>horas para esse Job?
+                </label>
                 <input 
                   type="number"
                   id="total-hours" 
-                  name="total-hours" />
+                  name="totalHours" 
+                />
               </div>
             </div>
           </fieldset>
-    
         </form>
       </main>
       <aside class="card">
         <img src="/images/money-gray.svg" alt="Imagem de Dinheiro">
         <p>
-          Preencha os dados ao lado para
-          ver o valor do projeto
+          Preencha os dados ao lado para ver o valor do projeto
         </p>
         <div class="button-group">
           <button 
             class="button green" 
             form="form-job" 
             type="submit" 
-            title="Salvar Dados">Salvar</button>
+            title="Salvar Dados"
+          >
+            Salvar
+          </button>
           <a 
             href="/" 
-            class="button gray">
+            class="button gray"
+          >
             <img 
               src="/images/trash-24.svg" 
               alt="Cancelar cadastro" 
-              title="Cancelar cadastro">
+              title="Cancelar cadastro"
+            >
           </a>
         </div>
       </aside>
