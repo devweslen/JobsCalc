@@ -6,28 +6,17 @@ const JobController = {
   create(request, response) {
     return response.render("job.ejs")
   },
-  save(request, response) {
-    const jobs = Job.get()
+  async save(request, response) {
+    const newJob = request.body
 
-    const { name, dailyHours, totalHours } = request.body
-    const lastId = jobs[jobs.length - 1] ? jobs[jobs.length - 1].id : 1
-
-    const jobData = {
-      id: lastId + 1,
-      name,
-      dailyHours,
-      totalHours,
-      createdAt: Date.now()
-    }
-
-    jobs.push(jobData)
+    Job.create(newJob)
 
     return response.redirect("/")
   },
-  show(request, response) {
+  async show(request, response) {
     const jobId = request.params.id
-    const jobs = Job.get()
-    const profile = Profile.get()
+    const jobs = await Job.get()
+    const profile = await Profile.get()
 
     const job = jobs.find(job => Number(job.id) === Number(jobId))
 
@@ -39,39 +28,24 @@ const JobController = {
 
     return response.render("job-edit.ejs", { job })
   },
-  update(request, response) {
+  async update(request, response) {
     const jobId = request.params.id
-    const jobs = Job.get()
-
-    const job = jobs.find(job => Number(job.id) === Number(jobId))
-
-    if (!job) {
-      return response.send("Job not found")
-    }
+    const { name, totalHours, dailyHours } = request.body
 
     const updatedJob = {
-      ...job,
-      name: request.body.name,
-      totalHours: request.body.totalHours,
-      dailyHours: request.body.dailyHours
+      name: name,
+      totalHours: totalHours,
+      dailyHours: dailyHours
     }
 
-    const updatedJobs = jobs.map((job) => {
-      if (Number(job.id) === Number(jobId)) {
-        job = updatedJob
-      }
-
-      return job
-    })
-
-    Job.update(updatedJobs)
+    await Job.update(jobId, updatedJob)
 
     response.redirect("/")
   },
-  delete(request, response) {
+  async delete(request, response) {
     const jobId = request.params.id
 
-    Job.delete(jobId)
+    await Job.delete(jobId)
 
     response.redirect("/")
   }

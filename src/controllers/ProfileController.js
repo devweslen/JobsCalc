@@ -2,10 +2,11 @@ const Profile = require('../models/Profile')
 
 
 const ProfileController = {
-  index(request, response){
-    return response.render("profile.ejs", { profile: Profile.get() })
+  async index(request, response){
+    const profile = await Profile.get() 
+    return response.render("profile.ejs", { profile })
   },
-  update(request, response){
+  async update(request, response){
     const profileData = request.body
     const WEEKS_PER_YEAR = 52
     const MONTHS_PER_YEAR = 12
@@ -15,8 +16,10 @@ const ProfileController = {
 
     const valueHour = profileData.monthlyBudget / monthlyTotalHours
 
+    const profile = await Profile.get()
+
     const updatedProfile = {
-      ...Profile.get(),
+      ...profile,
       ...profileData,
       valueHour
     }
